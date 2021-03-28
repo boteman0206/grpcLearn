@@ -22,4 +22,8 @@ learn grpc
 
 
 
+上面生成的是普通文件
+
+7： 下面生成grpc调用文件
+protoc --go_out=plugins=grpc:../services prod.proto
 
