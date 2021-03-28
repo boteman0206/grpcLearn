@@ -27,3 +27,6 @@ learn grpc
 7： 下面生成grpc调用文件
 protoc --go_out=plugins=grpc:../services prod.proto
 
+
+8: 下载grpc包： go get -u google.golang.org/grpc 
+书写服务端server文件
