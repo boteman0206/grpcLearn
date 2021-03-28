@@ -246,6 +246,7 @@ func (c *helloServiceClient) SayHello(ctx context.Context, in *HelloRequest, opt
 	return out, nil
 }
 
+//todo 需要自定义services文件实现sayhello方法
 // HelloServiceServer is the server API for HelloService service.
 type HelloServiceServer interface {
 	SayHello(context.Context, *HelloRequest) (*HelloResponse, error)
@@ -259,6 +260,7 @@ func (*UnimplementedHelloServiceServer) SayHello(context.Context, *HelloRequest)
 	return nil, status.Errorf(codes.Unimplemented, "method SayHello not implemented")
 }
 
+//todo 有用的注册方法
 func RegisterHelloServiceServer(s *grpc.Server, srv HelloServiceServer) {
 	s.RegisterService(&_HelloService_serviceDesc, srv)
 }
