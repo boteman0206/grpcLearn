@@ -1,0 +1,25 @@
+
+syntax = "proto3";
+
+package demo1;
+option go_package = "../services;HelloTest";
+
+message Req{
+  string name = 1;
+  oneof type {
+    string addr = 2;
+    string phone = 3;
+  }
+
+  int32 age = 4;
+}
+
+
+message Response {
+  string msg = 1;
+}
+
+
+service TestServer1{
+  rpc TestDemo1(Req) returns (Response);
+}

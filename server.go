@@ -13,7 +13,10 @@ import (
 func main() {
 	server := grpc.NewServer()
 
+	// 注册prod.proto服务
 	HelloTest.RegisterHelloServiceServer(server, new(HelloTest.ProdService))
+	// 注册demo1.proto服务
+	HelloTest.RegisterTestServer1Server(server, new(HelloTest.Demo1Test))
 
 	listener, e := net.Listen("tcp", ":8082")
 
