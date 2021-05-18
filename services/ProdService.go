@@ -2,6 +2,7 @@ package HelloTest
 
 import (
 	"context"
+	"fmt"
 )
 
 type ProdService struct {
@@ -14,5 +15,7 @@ func (this *ProdService) SayHello(ctx context.Context, req *HelloRequest) (*Hell
 }
 
 func (this *ProdService) MyIntTest(ctx context.Context, req *ReqMy) (*HelloResponse, error) {
+
+	fmt.Println("获取的myintTest的参数：", req, req.N1, req.N2)
 	return &HelloResponse{Message: "测试int32和int64参数的使用。。。"}, nil
 }

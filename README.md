@@ -30,3 +30,5 @@ protoc --go_out=plugins=grpc:../services prod.proto
 
 8: 下载grpc包： go get -u google.golang.org/grpc 
 书写服务端server文件
+
+9：proto3不支持required的关键词 Required fields are not allowed in proto3.
