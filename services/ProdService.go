@@ -12,3 +12,7 @@ type ProdService struct {
 func (this *ProdService) SayHello(ctx context.Context, req *HelloRequest) (*HelloResponse, error) {
 	return &HelloResponse{Message: "调用grpc成功"}, nil
 }
+
+func (this *ProdService) MyIntTest(ctx context.Context, req *ReqMy) (*HelloResponse, error) {
+	return &HelloResponse{Message: "测试int32和int64参数的使用。。。"}, nil
+}

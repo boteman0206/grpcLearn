@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+package other;
+
+message Req{
+  string name = 1;
+
+
+
+
+}

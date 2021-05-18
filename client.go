@@ -46,4 +46,13 @@ func main() {
 	}
 	demo1, e := server1Client.TestDemo1(context.Background(), &req)
 	fmt.Println("demo1 的 error ：", e, " demo1 的 res： ", demo1)
+
+	// 测试参数int32和int64区别
+	reqmy := HelloTest.ReqMy{
+		N1: int64(91),
+		N2: int32(12),
+	}
+	test, e := client.MyIntTest(context.Background(), &reqmy)
+	fmt.Println("test : ", test.Message, e)
+
 }

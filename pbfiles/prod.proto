@@ -12,5 +12,13 @@ message HelloResponse {
 }
 
 service HelloService {
-  rpc SayHello(HelloRequest) returns (HelloResponse){}
+  rpc SayHello(HelloRequest) returns (HelloResponse){};
+  rpc MyIntTest(ReqMy) returns (HelloResponse);
 }
+
+
+message ReqMy{
+  int64 n1 = 1;
+  int32 n2 = 2;
+}
+
