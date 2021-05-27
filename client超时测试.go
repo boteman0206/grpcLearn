@@ -6,7 +6,9 @@ package main
 
 import (
 	"context"
+	"encoding/json"
 	"fmt"
+	"google.golang.org/grpc/metadata"
 	"time"
 
 	//kit "github.com/tricobbler/rp-kit"
@@ -29,7 +31,14 @@ func main() {
 	client := HelloTest.NewHelloServiceClient(conn)
 
 	clientDeadline := time.Now().Add(3 * time.Second)
-	ctx, cancel := context.WithDeadline(context.Background(), clientDeadline)
+
+	data := []string{"jack", "bob", "lucy"}
+	marshal, e := json.Marshal(data)
+
+	//todo、 添加过滤器的设置
+	ctx := metadata.AppendToOutgoingContext(context.Background(), "authorization", string(marshal))
+
+	ctx, cancel := context.WithDeadline(ctx, clientDeadline)
 	defer cancel()
 
 	test, e := client.TimeOutTest(ctx, &HelloTest.HelloRequest{
