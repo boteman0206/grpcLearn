@@ -6,7 +6,11 @@ package main
 
 import (
 	"context"
+	"encoding/json"
 	"fmt"
+	"google.golang.org/grpc/metadata"
+
+	//kit "github.com/tricobbler/rp-kit"
 	"google.golang.org/grpc"
 	"grpcProLearn/services"
 )
@@ -52,7 +56,52 @@ func main() {
 		//N1: int64(91),
 		//N2: int32(12),
 	}
-	test, e := client.MyIntTest(context.Background(), &reqmy)
+
+	// rpc 无法传递数据貌似
+	background := context.WithValue(context.Background(), "name", "jack-data")
+	test, e := client.MyIntTest(background, &reqmy)
 	fmt.Println("test : ", test.Message, e)
 
+	//grpc设置参数
+	fmt.Println("+==============grpc设置参数=============")
+	//grpcContext := struct {
+	//	Name string
+	//	Age int
+	//}{
+	//	Name: "jack",
+	//	Age: 12,
+	//}
+	//marshal, e := json.Marshal(grpcContext)
+	//
+	//ctx := metadata.AppendToOutgoingContext(context.Background(), "grpc_context", string(marshal))
+
+	// later, add some more metadata to the context (e.g. in an interceptor)
+	//md, _ := metadata.FromOutgoingContext(ctx)
+	//newMD := metadata.Pairs("k3", "v3")
+	//ctx = metadata.NewContext(ctx, metadata.Join(metadata.New(send), newMD))
+
+	/**
+	todo 这种方式添加参数是可以通过  metadata.FromIncomingContext(ctx)来获取context里面的参数的
+		会将 k1的value合并 获取的参数的数据信息： k1 = [v1 v2],  k2 = [v3]
+	*/
+	md := metadata.Pairs("k1", "v1", "k1", "v2", "k2", "v3")
+	ctx := metadata.NewOutgoingContext(context.Background(), md)
+	test1, e := client.MyIntTest(ctx, &reqmy)
+	fmt.Println("二次测试： ", test1.Message, e)
+
+	fmt.Println("+=============测试结构体参数的传递==============")
+
+	grpcContext := struct {
+		Name string
+		Age  int
+	}{
+		Name: "jack",
+		Age:  12,
+	}
+	marshal, e := json.Marshal(grpcContext)
+
+	ctx1 := metadata.AppendToOutgoingContext(context.Background(), "grpc_context", string(marshal))
+	intTest, e := client.MyIntTest(ctx1, &reqmy)
+
+	fmt.Println("++++++++++++++++", intTest, e)
 }
