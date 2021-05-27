@@ -29,6 +29,10 @@ func main() {
 	//客户端调用
 	client := HelloTest.NewHelloServiceClient(conn)
 
+	//todo 获取自己即将发出的context
+	raw1, i21, b := metadata.FromOutgoingContextRaw(context.Background())
+	fmt.Println("row1 : ", raw1, " i21 : ", i21, " b :", b)
+
 	//调用方法sqyHello
 	response, i := client.SayHello(context.Background(),
 		&HelloTest.HelloRequest{Username: "i am jack"})
@@ -101,6 +105,10 @@ func main() {
 	marshal, e := json.Marshal(grpcContext)
 
 	ctx1 := metadata.AppendToOutgoingContext(context.Background(), "grpc_context", string(marshal))
+
+	//todo 获取自己即将发出的context
+	raw, i2, b := metadata.FromOutgoingContextRaw(ctx)
+	fmt.Println("row : ", raw, " i2 : ", i2, " b :", b)
 	intTest, e := client.MyIntTest(ctx1, &reqmy)
 
 	fmt.Println("++++++++++++++++", intTest, e)

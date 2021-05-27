@@ -41,7 +41,7 @@ func (this *ProdService) MyIntTest(ctx context.Context, req *ReqMy) (*HelloRespo
 	fmt.Println("获取的参数的数据信息： ", k1, k2)
 
 	// todo 传递过来的结构体也是可以获取的
-	get := md.Get("grpc_context")
+	get := md.Get("grpc_context") // todo 返回的是数组可以直接get[0]来获取
 	var data map[string]interface{}
 	join := strings.Join(get, "")
 	err := json.Unmarshal([]byte(join), &data)
