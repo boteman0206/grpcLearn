@@ -14,6 +14,9 @@ message HelloResponse {
 service HelloService {
   rpc SayHello(HelloRequest) returns (HelloResponse){};
   rpc MyIntTest(ReqMy) returns (HelloResponse);
+
+  // 超时测试
+  rpc TimeOutTest(HelloRequest) returns (HelloResponse){};
 }
 
 

@@ -6,10 +6,13 @@ import (
 	"fmt"
 	"google.golang.org/grpc/metadata"
 	"strings"
+	"time"
 )
 
 type ProdService struct {
 }
+
+var _ HelloServiceServer = (*ProdService)(nil)
 
 //实现sayHello方法
 
@@ -48,4 +51,22 @@ func (this *ProdService) MyIntTest(ctx context.Context, req *ReqMy) (*HelloRespo
 	fmt.Println("获取的结构体的数据： ", err, data, data["Name"], data["Age"])
 	return &HelloResponse{Message: "测试int32和int64参数的使用。。。"}, nil
 
+}
+
+// todo grpc的超时测试
+func (this *ProdService) TimeOutTest(ctx context.Context, req *HelloRequest) (*HelloResponse, error) {
+
+	fmt.Println("===========================")
+	time.Sleep(2 * time.Second) // 超时
+
+	select {
+	case demo := <-ctx.Done():
+		fmt.Println("超时了。。。。", demo)
+	default:
+		fmt.Println("default ...")
+	}
+
+	fmt.Println("这是啥error： ", ctx.Err(), ctx.Err() == context.Canceled)
+
+	return &HelloResponse{Message: "超时测试程序： "}, nil
 }
