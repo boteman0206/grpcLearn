@@ -57,7 +57,7 @@ func (this *ProdService) MyIntTest(ctx context.Context, req *ReqMy) (*HelloRespo
 func (this *ProdService) TimeOutTest(ctx context.Context, req *HelloRequest) (*HelloResponse, error) {
 
 	fmt.Println("===========================")
-	time.Sleep(2 * time.Second) // 超时
+	time.Sleep(4 * time.Second) // 超时
 
 	select {
 	case demo := <-ctx.Done():
